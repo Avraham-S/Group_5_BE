@@ -11,7 +11,7 @@ router.post("/", checkPassword, async (req, res) => {
   if (check) {
     res.send({ ...req.result.data[0], password: null });
   } else {
-    res.send(false);
+    res.status(400).send("Incorrect info");
   }
 });
 
