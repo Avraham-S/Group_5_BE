@@ -39,7 +39,7 @@ async function getUsersBooks(userId) {
   try {
     const { data, error } = await supabase
       .from("usersBooks")
-      .select()
+      .select("*")
       .eq("userId", userId);
     if (error) throw error;
     return data;
@@ -59,6 +59,7 @@ async function checkEmail(req, res, next) {
     res.status(400).send("email already exists");
   }
 }
+
 async function checkPassword(req, res, next) {
   const email = req.body.email;
   const result = await supabase.from("users").select("*").eq("email", email);
