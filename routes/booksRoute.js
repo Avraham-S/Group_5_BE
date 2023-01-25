@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const {
   addReadBookModel,
   removeReadBook,
@@ -7,6 +8,19 @@ const {
   getBookById,
 } = require("../db_models");
 const router = express.Router();
+
+router.post("/getRecomendation", (req, res) => {
+  try {
+    const { data } = axios.post(
+      "http://3.71.34.182:8080/predict_churn",
+      req.body
+    );
+    res.send(data);
+  } catch (error) {
+    res.status(500).send(error);
+    console.error(error);
+  }
+});
 
 router.post("/add", async (req, res) => {
   try {
