@@ -78,7 +78,7 @@ async function searchBook(req, res, next) {
     .from("books")
     .select("*")
     .ilike("title", `%${req.body.title}%`)
-    .limit(5);
+    .limit(20);
   console.log(data);
   req.books = data;
   next();
