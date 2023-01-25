@@ -73,6 +73,19 @@ async function checkPassword(req, res, next) {
   }
 }
 
+async function getBookById(id) {
+  try {
+    const result = await supabase.from("books").select("*").eq("bookId", id);
+    // if (error) throw error;
+    console.log(result);
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
 async function searchBook(req, res, next) {
   const data = await supabase
     .from("books")
@@ -90,4 +103,6 @@ module.exports = {
   checkEmail,
   checkPassword,
   searchBook,
+  getBookById,
+  supabase,
 };

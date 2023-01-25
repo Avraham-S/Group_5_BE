@@ -3,6 +3,8 @@ const {
   addReadBookModel,
   removeReadBook,
   getUsersBooks,
+  supabase,
+  getBookById,
 } = require("../db_models");
 const router = express.Router();
 
@@ -12,6 +14,17 @@ router.post("/add", async (req, res) => {
     const data = await addReadBookModel(bookId, userId);
 
     res.send(true);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const { id } = req.query;
+    const result = await getBookById(id);
+    res.send(result.data[0]);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
