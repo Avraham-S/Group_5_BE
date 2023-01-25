@@ -72,10 +72,21 @@ async function checkPassword(req, res, next) {
   }
 }
 
+async function searchBook(req, res, next) {
+  const data = await supabase
+    .from("books")
+    .select("*")
+    .ilike("title", `%${req.body.title}%`)
+    .limit(5);
+  console.log(data);
+  req.books = data;
+  next();
+}
 module.exports = {
   addReadBookModel,
   removeReadBook,
   getUsersBooks,
   checkEmail,
   checkPassword,
+  searchBook,
 };
