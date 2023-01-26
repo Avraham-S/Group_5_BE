@@ -9,13 +9,16 @@ const {
 } = require("../db_models");
 const router = express.Router();
 
-router.post("/getRecomendation", (req, res) => {
+router.post("/getRecomendation", async (req, res) => {
   try {
-    const { data } = axios.post(
-      "http://3.71.34.182:8080/predict_churn",
-      req.body
-    );
-    res.send(data);
+    // const { data } = await axios.post(
+    //   "http://3.71.34.182:8080/predict_churn",
+    //   req.body
+    // );
+    // res.send(data);
+
+    const { data } = await getBookById(req.body.key1[0]);
+    res.send(data[0]);
   } catch (error) {
     res.status(500).send(error);
     console.error(error);
