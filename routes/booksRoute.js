@@ -16,9 +16,15 @@ router.post("/getRecomendation", async (req, res) => {
     //   req.body
     // );
     // res.send(data);
+    const bookList = await Promise.all(
+      req.body.key1.map(async (id) => {
+        const { data } = await getBookById(id);
+        console.log("mapdata:", data[0]);
+        return data[0];
+      })
+    );
 
-    const { data } = await getBookById(req.body.key1[0]);
-    res.send(data[0]);
+    res.send(bookList);
   } catch (error) {
     res.status(500).send(error);
     console.error(error);
